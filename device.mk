@@ -15,27 +15,27 @@
 #
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
-LOCAL_KERNEL := device/ti/jacinto6evm/kernel
+LOCAL_KERNEL := device/ti/beaglex15/kernel
 else
 LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
 
 PRODUCT_COPY_FILES := \
 	$(LOCAL_KERNEL):kernel \
-	device/ti/jacinto6evm/tablet_core_hardware_jacinto6evm.xml:system/etc/permissions/tablet_core_hardware_jacinto6evm.xml \
-	device/ti/jacinto6evm/init.jacinto6evmboard.rc:root/init.jacinto6evmboard.rc \
-	device/ti/jacinto6evm/init.jacinto6evmboard.usb.rc:root/init.jacinto6evmboard.usb.rc \
-	device/ti/jacinto6evm/ueventd.jacinto6evmboard.rc:root/ueventd.jacinto6evmboard.rc \
-	device/ti/jacinto6evm/fstab.jacinto6evmboard:root/fstab.jacinto6evmboard \
-	device/ti/jacinto6evm/media_profiles.xml:system/etc/media_profiles.xml \
-	device/ti/jacinto6evm/media_codecs.xml:system/etc/media_codecs.xml \
-	device/ti/jacinto6evm/bootanimation.zip:/system/media/bootanimation.zip \
+	device/ti/beaglex15/tablet_core_hardware_beaglex15.xml:system/etc/permissions/tablet_core_hardware_beaglex15.xml \
+	device/ti/beaglex15/init.beaglex15board.rc:root/init.beaglex15board.rc \
+	device/ti/beaglex15/init.beaglex15board.usb.rc:root/init.beaglex15board.usb.rc \
+	device/ti/beaglex15/ueventd.beaglex15board.rc:root/ueventd.beaglex15board.rc \
+	device/ti/beaglex15/fstab.beaglex15board:root/fstab.beaglex15board \
+	device/ti/beaglex15/media_profiles.xml:system/etc/media_profiles.xml \
+	device/ti/beaglex15/media_codecs.xml:system/etc/media_codecs.xml \
+	device/ti/beaglex15/bootanimation.zip:/system/media/bootanimation.zip \
 	frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
 	frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
 	frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
 	frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
-	device/ti/jacinto6evm/Atmel_maXTouch_Touchscreen.idc:system/usr/idc/Atmel_maXTouch_Touchscreen.idc \
-	device/ti/jacinto6evm/LDC_3001_TouchScreen_Controller.idc:system/usr/idc/LDC_3001_TouchScreen_Controller.idc \
+	device/ti/beaglex15/Atmel_maXTouch_Touchscreen.idc:system/usr/idc/Atmel_maXTouch_Touchscreen.idc \
+	device/ti/beaglex15/LDC_3001_TouchScreen_Controller.idc:system/usr/idc/LDC_3001_TouchScreen_Controller.idc \
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -57,7 +57,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_CHARACTERISTICS := tablet,nosdcard
 
 DEVICE_PACKAGE_OVERLAYS := \
-	device/ti/jacinto6evm/overlay
+	device/ti/beaglex15/overlay
 
 PRODUCT_TAGS += dalvik.gc.type-precise
 
@@ -150,6 +150,6 @@ $(call inherit-product, frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap
 $(call inherit-product-if-exists, hardware/ti/omap4xxx/jacinto6.mk)
 $(call inherit-product-if-exists, hardware/ti/wpan/ti-wpan-products.mk)
 $(call inherit-product-if-exists, device/ti/proprietary-open/jacinto6/ti-jacinto6-vendor.mk)
-$(call inherit-product-if-exists, device/ti/proprietary-open/jacinto6/ducati-full_jacinto6evm.mk)
+$(call inherit-product-if-exists, device/ti/proprietary-open/jacinto6/ducati-full_beaglex15.mk)
 $(call inherit-product-if-exists, device/ti/proprietary-open/wl12xx/wlan/wl12xx-wlan-fw-products.mk)
 $(call inherit-product-if-exists, device/ti/proprietary-open/wl12xx/wpan/wl12xx-wpan-fw-products.mk)

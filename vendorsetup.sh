@@ -14,5 +14,5 @@
 # limitations under the License.
 #
 
-add_lunch_combo full_jacinto6evm-eng
-add_lunch_combo full_jacinto6evm-userdebug
+add_lunch_combo full_beaglex15-eng
+add_lunch_combo full_beaglex15-userdebug

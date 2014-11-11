@@ -35,18 +35,18 @@ TARGET_CPU_VARIANT := cortex-a15
 
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_TI := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/ti/jacinto6evm/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/ti/beaglex15/bluetooth
 TARGET_NO_BOOTLOADER := true
 
 BOARD_KERNEL_BASE := 0x80000000
-#BOARD_KERNEL_CMDLINE := console=ttyO2,115200n8 mem=1024M androidboot.console=ttyO2 androidboot.hardware=jacinto6evmboard vram=20M omapfb.vram=0:16M
+#BOARD_KERNEL_CMDLINE := console=ttyO2,115200n8 mem=1024M androidboot.console=ttyO2 androidboot.hardware=beaglex15board vram=20M omapfb.vram=0:16M
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01f00000
 
 TARGET_NO_RADIOIMAGE := true
 TARGET_BOARD_PLATFORM := jacinto6
-TARGET_BOOTLOADER_BOARD_NAME := jacinto6evm
+TARGET_BOOTLOADER_BOARD_NAME := beaglex15
 
-BOARD_EGL_CFG := device/ti/jacinto6evm/egl.cfg
+BOARD_EGL_CFG := device/ti/beaglex15/egl.cfg
 
 USE_OPENGL_RENDERER := true
 
@@ -55,9 +55,9 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 805306368
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 2147483648
 BOARD_FLASH_BLOCK_SIZE := 4096
 
-TARGET_RECOVERY_FSTAB = device/ti/jacinto6evm/fstab.jacinto6evmboard
+TARGET_RECOVERY_FSTAB = device/ti/beaglex15/fstab.beaglex15board
 TARGET_RECOVERY_PIXEL_FORMAT := "RGB565"
-TARGET_RELEASETOOLS_EXTENSIONS := device/ti/jacinto6evm
+TARGET_RELEASETOOLS_EXTENSIONS := device/ti/beaglex15
 
 # Connectivity - Wi-Fi
 #USES_TI_MAC80211 := true
@@ -74,7 +74,7 @@ ifeq ($(OMAP_MULTIZONE_AUDIO),true)
 COMMON_GLOBAL_CFLAGS += -DOMAP_MULTIZONE_AUDIO
 endif
 
-#BOARD_SEPOLICY_DIRS := device/ti/jacinto6evm/sepolicy
+#BOARD_SEPOLICY_DIRS := device/ti/beaglex15/sepolicy
 #BOARD_SEPOLICY_UNION := \
 #        healthd.te
 

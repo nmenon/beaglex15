@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-PRODUCT_MAKEFILES := $(LOCAL_DIR)/full_jacinto6evm.mk
+PRODUCT_MAKEFILES := $(LOCAL_DIR)/full_beaglex15.mk

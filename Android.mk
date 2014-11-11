@@ -25,10 +25,10 @@ LOCAL_PATH := $(call my-dir)
 # protect makefile from other boards
 # if some modules are built directly from this directory (not subdirectories),
 # their rules should be written here.
-ifeq ($(TARGET_DEVICE),jacinto6evm)
+ifeq ($(TARGET_DEVICE),beaglex15)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := jacinto6evm_hdcp_keys
+LOCAL_MODULE := beaglex15_hdcp_keys
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := FAKE
 LOCAL_MODULE_SUFFIX := -timestamp

@@ -1,4 +1,4 @@
-import init.jacinto6evmboard.usb.rc
+import init.beaglex15board.usb.rc
 
 on early-init
     mount debugfs /sys/kernel/debug /sys/kernel/debug
@@ -70,7 +70,7 @@ on boot
 
 on fs
     mkdir /factory 0775 radio radio
-    mount_all /fstab.jacinto6evmboard
+    mount_all /fstab.beaglex15board
 
 # Make UART wake up capable
     write /sys/devices/ocp.2/4806a000.serial/tty/ttyO0/power/wakeup enabled

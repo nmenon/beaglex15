@@ -22,11 +22,11 @@
 #
 
 # Inherit from those products. Most specific first.
-$(call inherit-product, device/ti/jacinto6evm/device.mk)
+$(call inherit-product, device/ti/beaglex15/device.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
 
-PRODUCT_NAME := full_jacinto6evm
-PRODUCT_DEVICE := jacinto6evm
+PRODUCT_NAME := full_beaglex15
+PRODUCT_DEVICE := beaglex15
 PRODUCT_BRAND := Android
-PRODUCT_MODEL := jacinto6evm
+PRODUCT_MODEL := beaglex15
 PRODUCT_MANUFACTURER := Texas_Instruments_Inc
