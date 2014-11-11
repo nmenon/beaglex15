@@ -29,4 +29,4 @@ PRODUCT_NAME := full_beaglex15
 PRODUCT_DEVICE := beaglex15
 PRODUCT_BRAND := Android
 PRODUCT_MODEL := beaglex15
-PRODUCT_MANUFACTURER := Texas_Instruments_Inc
+PRODUCT_MANUFACTURER := BeagleBoard_Org
