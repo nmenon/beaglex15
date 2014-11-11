@@ -1,0 +1,85 @@
+<mixer>
+
+<!-- Card default routes -->
+
+<!-- Capture: Mic -->
+<ctl name="Left PGA Mixer Mic3L Switch" value="1" />
+<ctl name="Right PGA Mixer Mic3R Switch" value="1" />
+<ctl name="PGA Capture Switch" value="1" />
+<ctl name="PGA Capture Volume" value="24" />
+<ctl name="Left Line1L Mux" value="single-ended" />
+<ctl name="Right Line1L Mux" value="single-ended" />
+<ctl name="Left Line1R Mux" value="single-ended" />
+<ctl name="Right Line1R Mux" value="single-ended" />
+
+<!-- Playback: Line-Out and Headphone -->
+<ctl name="Left DAC Mux" value="DAC_L1" />
+<ctl name="Right DAC Mux" value="DAC_R1" />
+<ctl name="PCM Playback Volume" value="127" />
+
+<ctl name="Left HP Mixer DACL1 Switch" value="1" />
+<ctl name="Right HP Mixer DACR1 Switch" value="1" />
+<ctl name="HP Playback Switch" value="1" />
+<ctl name="HP DAC Playback Volume" value="118" />
+<ctl name="Output Driver Power-On time" value="200ms" />
+
+<ctl name="Left Line Mixer DACL1 Switch" value="1" />
+<ctl name="Right Line Mixer DACR1 Switch" value="1" />
+<ctl name="Line Playback Switch" value="1" />
+<ctl name="Line DAC Playback Volume" value="118" />
+
+<!-- JAMR3 board, codec-A input: Line-In -->
+<ctl name="J3A Left PGA Mixer Line1L Switch" value="1" />
+<ctl name="J3A Right PGA Mixer Line1R Switch" value="1" />
+<ctl name="J3A PGA Capture Switch" value="1" />
+<ctl name="J3A PGA Capture Volume" value="0" />
+<ctl name="J3A Left Line1L Mux" value="differential" />
+<ctl name="J3A Right Line1L Mux" value="differential" />
+<ctl name="J3A Left Line1R Mux" value="differential" />
+<ctl name="J3A Right Line1R Mux" value="differential" />
+
+<!-- JAMR3 board, codec-B input: Mic -->
+<ctl name="J3B Left PGA Mixer Line1L Switch" value="1" />
+<ctl name="J3B Right PGA Mixer Line1R Switch" value="1" />
+<ctl name="J3B PGA Capture Switch" value="1" />
+<ctl name="J3B PGA Capture Volume" value="0" />
+<ctl name="J3B Left Line1L Mux" value="differential" />
+<ctl name="J3B Right Line1L Mux" value="differential" />
+<ctl name="J3B Left Line1R Mux" value="differential" />
+<ctl name="J3B Right Line1R Mux" value="differential" />
+
+<!-- JAMR3 board, codec-A output: Line-Out -->
+<ctl name="J3A Left DAC Mux" value="DAC_L1" />
+<ctl name="J3A Right DAC Mux" value="DAC_R1" />
+<ctl name="J3A Left Line Mixer DACL1 Switch" value="1" />
+<ctl name="J3A Right Line Mixer DACR1 Switch" value="1" />
+<ctl name="J3A Line DAC Playback Volume" value="118" />
+<ctl name="J3A Line Playback Switch" value="1" />
+<ctl name="J3A PCM Playback Volume" value="127" />
+
+<!-- JAMR3 board, codec-B Output: Line-Out -->
+<ctl name="J3B Left DAC Mux" value="DAC_L1" />
+<ctl name="J3B Right DAC Mux" value="DAC_R1" />
+<ctl name="J3B Left Line Mixer DACL1 Switch" value="1" />
+<ctl name="J3B Right Line Mixer DACR1 Switch" value="1" />
+<ctl name="J3B Line DAC Playback Volume" value="118" />
+<ctl name="J3B Line Playback Switch" value="1" />
+<ctl name="J3B PCM Playback Volume" value="127" />
+
+<!-- JAMR3 board, codec-C Output: Line-Out -->
+<ctl name="J3C Left DAC Mux" value="DAC_L1" />
+<ctl name="J3C Right DAC Mux" value="DAC_R1" />
+<ctl name="J3C Left Line Mixer DACL1 Switch" value="1" />
+<ctl name="J3C Right Line Mixer DACR1 Switch" value="1" />
+<ctl name="J3C Line DAC Playback Volume" value="118" />
+<ctl name="J3C Line Playback Switch" value="1" />
+<ctl name="J3C PCM Playback Volume" value="127" />
+
+<!-- Bluetooth -->
+<ctl name="Bluetooth Mode" value="Slave" />
+
+<path name="BT SCO Master">
+  <ctl name="Bluetooth Mode" value="Master" />
+</path>
+
+</mixer>

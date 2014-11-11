@@ -1,0 +1,29 @@
+#for PVR
+/dev/pvrsrvkm             0666   system     system
+
+#for DSSCOMP
+/dev/dsscomp              0666   system     system
+
+# for IPC3.x
+/dev/rpmsg-dce            0660   media      media
+
+# V4L camera
+/dev/video*               0660   system    camera
+
+# for Bluetooth
+/dev/hci_tty              0666   bluetooth bluetooth
+
+# Radio Tuners
+/dev/i2c-0                0660   system system
+/dev/i2c-1                0660   system system
+/dev/i2c-3                0660   system system
+/dev/i2c-4                0660   system system
+
+# cmem
+/dev/cmem                 0660   system system
+
+#for GCX
+/dev/gcioctl              0666   system     system
+
+# for GNSS
+/dev/tigps                0666   root	    root

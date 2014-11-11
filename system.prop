@@ -1,0 +1,2 @@
+wifi.interface=wlan0
+persist.hwc.primary.tv=1

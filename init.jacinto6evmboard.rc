@@ -1,0 +1,207 @@
+import init.jacinto6evmboard.usb.rc
+
+on early-init
+    mount debugfs /sys/kernel/debug /sys/kernel/debug
+
+on init
+    mkdir /mnt/shell/emulated 0700 shell shell
+    mkdir /storage/emulated 0555 root root
+
+    export EXTERNAL_STORAGE /storage/emulated/legacy
+    export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
+    export EMULATED_STORAGE_TARGET /storage/emulated
+
+    # Support legacy paths
+    symlink /storage/emulated/legacy /sdcard
+    symlink /storage/emulated/legacy /mnt/sdcard
+    symlink /storage/emulated/legacy /storage/sdcard0
+    symlink /mnt/shell/emulated/0 /storage/emulated/legacy
+
+# create the real external storage
+    mkdir /storage/sdcard1 0700 root root
+    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
+
+# create removable USB Mass Storage mountpoints
+    mkdir /storage/usb0 0700 root root
+    mkdir /storage/usb1 0700 root root
+    mkdir /mnt/media_rw/usb0 0700 media_rw media_rw
+    mkdir /mnt/media_rw/usb1 0700 media_rw media_rw
+
+on post-fs-data
+
+    mkdir /data/media 0770 media_rw media_rw
+
+    setprop vold.post_fs_data_done 1
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
+    mkdir /data/lad 0770 system system
+    mkdir /data/lad/LAD 0770 system system
+
+#for Bluetooth HID
+    chmod 0666 /dev/uhid
+
+# Create GPS folders and set its permissions
+    mkdir /data/gnss
+    chown system system /data/gnss
+    mkdir /data/gnss/logs/
+    mkdir /data/gnss/nvs/
+    mkdir /data/gnss/log_MD/
+    chown system system /data/gnss/logs/
+    chown system system /data/gnss/nvs/
+    chown system system /data/gnss/log_MD/
+    insmod /system/lib/modules/gps_drv.ko
+
+on boot
+    chmod 0666 /dev/pvrsrvkm
+
+    # wi-fi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    insmod /system/lib/modules/compat.ko
+    insmod /system/lib/modules/cfg80211.ko
+    insmod /system/lib/modules/mac80211.ko
+    insmod /system/lib/modules/wlcore.ko
+    insmod /system/lib/modules/wl12xx.ko
+    insmod /system/lib/modules/wl18xx.ko board_type=hdk
+    insmod /system/lib/modules/wlcore_sdio.ko
+
+    # CMEM for Radio
+    insmod /system/lib/modules/cmemk.ko phys_start=0x95400000 phys_end=0x95800000 pools=15x262144 allowOverlap=1
+
+on fs
+    mkdir /factory 0775 radio radio
+    mount_all /fstab.jacinto6evmboard
+
+# Make UART wake up capable
+    write /sys/devices/ocp.2/4806a000.serial/tty/ttyO0/power/wakeup enabled
+
+# change permissions for Bluetooth/FM/GPS
+    chmod 0660 /dev/ttyO4
+    chown bluetooth bluetooth /dev/ttyO4
+
+# take a wakelock on boot until PM is working
+    write /sys/power/wake_lock hack
+
+# change permissions for ION driver
+    chmod 0777 /dev/ion
+
+# Change permissions on the governor (this is for debug only)
+    chmod 444 /proc/cmdline
+
+# add symlink for HDCP key
+    symlink /factory/hdcp.keys /system/vendor/firmware/hdcp.keys
+
+service pvrsrvinit /vendor/bin/pvrsrvinit
+    class core
+    user root
+    group root
+    oneshot
+
+#shared transport user space mgr service for Bluetooth, FM and GPS
+service uim /system/bin/uim-sysfs
+    class core
+    user root
+    group bluetooth net_bt_admin
+
+# create virtual SD card at /mnt/sdcard, based on the /data/media directory
+# daemon will drop to user/group system/media_rw after initializing
+# underlying files in /data/media will be created with user and group media_rw (1023)
+service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
+    class late_start
+
+service p2p_supplicant /system/bin/wpa_supplicant \
+    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -N \
+    -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
+    -O/data/misc/wifi/sockets -g@android:wpa_wlan0
+    class main
+    socket wpa_wlan0 dgram 660 wifi wifi
+    disabled
+    oneshot
+
+service wpa_supplicant /system/bin/wpa_supplicant \
+    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -e/data/misc/wifi/entropy.bin \
+    -O/data/misc/wifi/sockets -g@android:wpa_wlan0
+    class main
+    socket wpa_wlan0 dgram 660 wifi wifi
+    disabled
+    oneshot
+
+service dhcpcd_wlan0 /system/bin/dhcpcd -aABDKL
+    class main
+    disabled
+    oneshot
+
+service iprenew_wlan0 /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_p2p /system/bin/dhcpcd -aABKL
+    class main
+    disabled
+    oneshot
+
+service iprenew_p2p /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_eth0 /system/bin/dhcpcd -ABDKL
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_eth1 /system/bin/dhcpcd -ABDKL
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_bnep0 /system/bin/dhcpcd -ABKL
+    class main
+    disabled
+    oneshot
+
+service iprenew_bnep0 /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
+service hostapd_bin /system/bin/hostapd -d /data/misc/wifi/hostapd.conf
+    socket wpa_wlan0 dgram 660 wifi wifi
+    class main
+    disabled
+    oneshot
+
+# fusewrapped external USB daemons running as media_rw (1023)
+service fuse_usb0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usb0 /storage/usb0
+    class late_start
+    disabled
+
+service fuse_usb1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usb1 /storage/usb1
+    class late_start
+    disabled
+
+service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
+    class late_start
+    disabled
+
+service lad_dra7xx /system/bin/logwrapper /system/bin/lad_dra7xx
+    class main
+    user system
+    group system
+    disabled
+    oneshot
+
+service devproxy /system/bin/devproxy
+    class main
+    disabled
+    oneshot
+    user system
+    group system
+
+service agnss_connect /system/bin/agnss_connect -p
+    class main
+    disabled
+    oneshot
+    user system
+    group system
