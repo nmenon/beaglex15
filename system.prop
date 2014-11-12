@@ -1,2 +1,3 @@
 wifi.interface=wlan0
 persist.hwc.primary.tv=1
+ro.hardware=beaglex15board
