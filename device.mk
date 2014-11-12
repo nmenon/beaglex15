@@ -22,7 +22,7 @@ endif
 
 PRODUCT_COPY_FILES := \
 	$(LOCAL_KERNEL):kernel \
-	device/ti/beaglex15/tablet_core_hardware_beaglex15.xml:system/etc/permissions/tablet_core_hardware_beaglex15.xml \
+	device/ti/beaglex15/hardware_beaglex15.xml:system/etc/permissions/hardware_beaglex15.xml \
 	device/ti/beaglex15/init.beaglex15board.rc:root/init.beaglex15board.rc \
 	device/ti/beaglex15/init.beaglex15board.usb.rc:root/init.beaglex15board.usb.rc \
 	device/ti/beaglex15/ueventd.beaglex15board.rc:root/ueventd.beaglex15board.rc \
