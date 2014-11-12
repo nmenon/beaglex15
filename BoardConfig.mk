@@ -17,14 +17,6 @@
 # These two variables are set first, so they can be overridden
 # by BoardConfigVendor.mk
 BOARD_USES_GENERIC_AUDIO := true
-#USE_CAMERA_STUB := true
-#OMAP_ENHANCEMENT := true
-
-ifeq ($(OMAP_ENHANCEMENT),true)
-COMMON_GLOBAL_CFLAGS += -DOMAP_ENHANCEMENT
-# Multi-zone audio (requires ro.com.ti.omap_multizone_audio, see device.mk)
-#OMAP_MULTIZONE_AUDIO := true
-endif
 
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
@@ -33,9 +25,6 @@ TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := cortex-a15
 
-BOARD_HAVE_BLUETOOTH := true
-BOARD_HAVE_BLUETOOTH_TI := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/ti/beaglex15/bluetooth
 TARGET_NO_BOOTLOADER := true
 
 BOARD_KERNEL_BASE := 0x80000000
@@ -59,22 +48,4 @@ TARGET_RECOVERY_FSTAB = device/ti/beaglex15/fstab.beaglex15board
 TARGET_RECOVERY_PIXEL_FORMAT := "RGB565"
 TARGET_RELEASETOOLS_EXTENSIONS := device/ti/beaglex15
 
-# Connectivity - Wi-Fi
-#USES_TI_MAC80211 := true
-ifeq ($(USES_TI_MAC80211),true)
-BOARD_WPA_SUPPLICANT_DRIVER := NL80211
-WPA_SUPPLICANT_VERSION      := VER_0_8_X_TI
-BOARD_HOSTAPD_DRIVER        := NL80211
-BOARD_WLAN_DEVICE           := wl12xx_mac80211
-BOARD_SOFTAP_DEVICE         := wl12xx_mac80211
-COMMON_GLOBAL_CFLAGS += -DUSES_TI_MAC80211
-endif
-
-ifeq ($(OMAP_MULTIZONE_AUDIO),true)
-COMMON_GLOBAL_CFLAGS += -DOMAP_MULTIZONE_AUDIO
-endif
-
-#BOARD_SEPOLICY_DIRS := device/ti/beaglex15/sepolicy
-#BOARD_SEPOLICY_UNION := \
-#        healthd.te
 
