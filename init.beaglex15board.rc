@@ -27,6 +27,11 @@ on init
     mkdir /mnt/media_rw/usb0 0700 media_rw media_rw
     mkdir /mnt/media_rw/usb1 0700 media_rw media_rw
 
+on post-fs
+    # HACK: for SD card boot mounting rootfs as rw and setuid for su
+    mount rootfs rootfs / rw remount
+    chmod 6755 /system/xbin/su
+
 on post-fs-data
 
     mkdir /data/media 0770 media_rw media_rw

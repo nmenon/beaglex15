@@ -21,6 +21,12 @@
 # lines, full and toro, hence its name.
 #
 
+PRODUCT_COPY_FILES := \
+	 frameworks/av/media/libeffects/data/audio_effects.conf:system/etc/audio_effects.conf  \
+	frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
+	frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
+	device/ti/beaglex15/720p_touchscreen.idc:system/usr/idc/720p_touchscreen.idc
+
 # Inherit from those products. Most specific first.
 $(call inherit-product, device/ti/beaglex15/device.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)

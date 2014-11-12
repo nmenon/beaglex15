@@ -136,6 +136,7 @@ struct j6_stream_out {
 static const char *supported_cards[] = {
     "dra7evm",
     "VayuEVM",
+    "DRA7xxEVM",
 };
 
 #define SUPPORTED_IN_DEVICES           (AUDIO_DEVICE_IN_BUILTIN_MIC | \
