@@ -103,13 +103,6 @@ PRODUCT_PACKAGES += \
 	tinyplay \
 	tinycap
 
-# Radio
-PRODUCT_PACKAGES += \
-	HelloRadio \
-	lad_dra7xx \
-	libtiipc \
-	libtiipcutils
-
 # Can utilities
 PRODUCT_PACKAGES += \
 	libcan \
@@ -139,10 +132,6 @@ PRODUCT_PACKAGES += \
 # Enable AAC 5.1 decode (decoder)
 PRODUCT_PROPERTY_OVERRIDES += \
 	media.aac_51_output_enabled=true
-
-# Multi-zone audio (requires OMAP_MULTIZONE_AUDIO, see BoardConfig.mk)
-PRODUCT_PROPERTY_OVERRIDES += \
-	ro.com.ti.omap_multizone_audio=true
 
 $(call inherit-product, frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk)
 $(call inherit-product-if-exists, hardware/ti/omap4xxx/jacinto6.mk)
