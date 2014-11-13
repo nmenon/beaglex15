@@ -23,9 +23,12 @@
      devices.
 -->
 <permissions>
+    <feature name="android.hardware.faketouch" />
+    <feature name="android.hardware.usb.host" />
     <feature name="android.hardware.touchscreen" />
     <feature name="android.hardware.microphone" />
     <feature name="android.hardware.screen.landscape" />
+
     <feature name="android.software.app_widgets" />
     <feature name="android.software.home_screen" />
     <!-- Feature to specify if the device supports adding device admins. -->
