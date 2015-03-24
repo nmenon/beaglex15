@@ -50,16 +50,16 @@ endef
 ifeq ($(TARGET_BOOTLOADER_DEFCONFIG_NAME),)
   $(error cannot build bootloader, TARGET_BOOTLOADER_DEFCONFIG_NAME not specified)
 endif
-define build-config
+define build-bootloader-config
 	$(bootloader-make) $(TARGET_BOOTLOADER_DEFCONFIG_NAME)
 endef
 
 
 ifeq ($(TARGET_BOOTLOADER_PRIMARY_IMAGE),)
-define move-image-primary
+define move-bootloader-image-primary
 endef
 else
-define move-image-primary
+define move-bootloader-image-primary
 	cp $(BOOTLOADER_BUILD_DIR)/$(TARGET_BOOTLOADER_PRIMARY_IMAGE) $(BOOTLOADER_OUT_DIR)
 endef
 endif
@@ -67,7 +67,7 @@ endif
 ifeq ($(TARGET_BOOTLOADER_SECONDARY_IMAGE),)
   $(error cannot build bootloader, TARGET_BOOTLOADER_SECONDARY_IMAGE not specified)
 else
-define move-image-secondary
+define move-bootloader-image-secondary
 	cp $(BOOTLOADER_BUILD_DIR)/$(TARGET_BOOTLOADER_SECONDARY_IMAGE) $(BOOTLOADER_OUT_DIR)
 endef
 endif
@@ -79,10 +79,10 @@ $(BOOTLOADER_OUT_DIR):
 	mkdir -p $(BOOTLOADER_OUT_DIR)
 
 $(TARGET_PREBUILT_INT_BOOTLOADER): $(BOOTLOADER_OUT_DIR) $(BOOTLOADER_BUILD_DIR)
-	$(build-config)
+	$(build-bootloader-config)
 	$(bootloader-make)
-	$(move-image-primary)
-	$(move-image-secondary)
+	$(move-bootloader-image-primary)
+	$(move-bootloader-image-secondary)
 
 build_bootloader: $(TARGET_PREBUILT_INT_BOOTLOADER)
 

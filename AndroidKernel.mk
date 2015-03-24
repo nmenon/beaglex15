@@ -66,13 +66,13 @@ endif
 
 ifeq ($(TARGET_KERNEL_CONFIG_FRAGMENTS),)
 
-define build-config
+define build-kernel-config
 	$(kernel-make) $(TARGET_KERNEL_DEFCONFIG_NAME)
 endef
 
 else
 
-define build-config
+define build-kernel-config
 	cd $(KERNEL_SRC_DIR) &&\
 	 ARCH=$(TARGET_KERNEL_ARCH) $(MERGE_CONFIG)  arch/$(TARGET_KERNEL_ARCH)/configs/$(TARGET_KERNEL_DEFCONFIG_NAME) $(TARGET_KERNEL_CONFIG_FRAGMENTS) &&\
 	 cd $(ANDROID_BUILD_TOP) &&\
@@ -83,11 +83,11 @@ endef
 endif
 
 ifeq ($(TARGET_KERNEL_COMMAND_LINE),)
-define modify-config
+define modify-kernel-config
 endef
 
 else
-define modify-config
+define modify-kernel-config
 	cat $(KERNEL_BUILD_DIR)/.config|grep -vw CONFIG_CMDLINE>$(KERNEL_BUILD_DIR)/.config.mod &&\
 	echo "CONFIG_CMDLINE=\"$(TARGET_KERNEL_COMMAND_LINE)\"">>$(KERNEL_BUILD_DIR)/.config.mod &&\
 	mv -f $(KERNEL_BUILD_DIR)/.config.mod $(KERNEL_BUILD_DIR)/.config
@@ -95,7 +95,7 @@ endef
 
 endif
 
-define move-images
+define move-kernel-images
 	cp $(KERNEL_BUILD_DIR)/arch/$(TARGET_KERNEL_ARCH)/boot/zImage $(TARGET_PREBUILT_INT_KERNEL) &&\
 	cp $(KERNEL_BUILD_DIR)/arch/$(TARGET_KERNEL_ARCH)/boot/dts/$(TARGET_KERNEL_DTS_NAME)*.dtb $(KERNEL_OUT_DIR)
 endef
@@ -117,7 +117,7 @@ endef
 
 endif
 
-sgx: build_kernel
+sgx: $(TARGET_PREBUILT_INT_KERNEL) $(KERNEL_HEADERS_INSTALL)
 	$(build-sgx-images)
 	$(move-sgx-images)
 
@@ -131,22 +131,24 @@ $(KERNEL_MODULES_INSTALL):
 	mkdir -p $(KERNEL_MODULES_INSTALL)
 
 $(KERNEL_CONFIG): $(KERNEL_BUILD_DIR)
-	$(build-config)
-	$(modify-config)
+	$(build-kernel-config)
+	$(modify-kernel-config)
 
 
 $(TARGET_PREBUILT_INT_KERNEL): $(KERNEL_MODULES_INSTALL) $(KERNEL_OUT_DIR) $(KERNEL_CONFIG) $(KERNEL_HEADERS_INSTALL)
 	$(kernel-make) zImage modules dtbs
 	$(kernel-make) INSTALL_MOD_PATH=$(KERNEL_MODULES_INSTALL) INSTALL_MOD_STRIP=1 modules_install
 	rm -vf $(KERNEL_MODULES_INSTALL)/lib/modules/*/build $(KERNEL_MODULES_INSTALL)/lib/modules/*/source
-	$(move-images)
+	$(move-kernel-images)
 
 $(KERNEL_HEADERS_INSTALL): $(KERNEL_OUT_DIR) $(KERNEL_CONFIG)
 	$(kernel-make) headers_install
 
 
-build_kernel: $(TARGET_PREBUILT_INT_KERNEL)
+build_kernel_components: $(KERNEL_CONFIG) $(TARGET_PREBUILT_INT_KERNEL)
 
-.PHONY: build_kernel sgx
+build_kernel: $(KERNEL_BUILD_DIR) $(KERNEL_OUT_DIR) build_kernel_components sgx
+
+.PHONY: build_kernel sgx build_kernel_components
 
 endif #TARGET_KERNEL_BUILT_FROM_SOURCE
