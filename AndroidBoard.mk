@@ -19,4 +19,7 @@ LOCAL_PATH := $(my-dir)
 include $(LOCAL_PATH)/AndroidKernel.mk
 include $(LOCAL_PATH)/AndroidBootloader.mk
 
-$(PRODUCT_OUT)/boot.img: sgx build_bootloader
+INSTALLED_VENDORIMAGE_TARGET := ti_vendor_image_rule
+
+
+ti_vendor_image_rule: build_kernel build_bootloader
