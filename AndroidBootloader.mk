@@ -17,7 +17,10 @@ else
 BOOTLOADER_TOOLCHAIN_ARCH := i686
 endif
 BOOTLOADER_EXTRA_FLAGS := ANDROID_TOOLCHAIN_FLAGS="-mno-android -Werror"
-BOOTLOADER_CROSS_COMP := $(notdir $(TARGET_TOOLS_PREFIX))
+#XXX ti-u-boot-2014.07 is broken for build with eabi compiler! try force gnueabi-
+#BOOTLOADER_CROSS_COMP := $(notdir $(TARGET_TOOLS_PREFIX))
+BOOTLOADER_CROSS_COMP := arm-linux-gnueabi-
+
 BOOTLOADER_CCACHE :=$(firstword $(TARGET_CC))
 
 ifeq ($(notdir $(BOOTLOADER_CCACHE)),ccache)
