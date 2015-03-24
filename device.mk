@@ -14,14 +14,57 @@
 # limitations under the License.
 #
 
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-LOCAL_KERNEL := device/ti/beaglex15/kernel
-else
-LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+BOOTLOADER_SRC_DIR ?= bootloader/ti/u-boot-omap/
+TARGET_BOOTLOADER_BUILT_FROM_SOURCE = true
+TARGET_BOOTLOADER_ARCH = arm
+TARGET_BOOTLOADER_DEFCONFIG_NAME=beagle_x15_config
+BOOTLOADER_OUT_DIR = $(PRODUCT_OUT)/boot
+TARGET_BOOTLOADER_PRIMARY_IMAGE = MLO
+TARGET_BOOTLOADER_SECONDARY_IMAGE = u-boot.img
+
+KERNEL_SRC_DIR ?= kernel/ti/omap/
+TARGET_KERNEL_BUILT_FROM_SOURCE = true
+TARGET_KERNEL_ARCH = arm
+TARGET_KERNEL_DEFCONFIG_NAME=omap2plus_defconfig
+TARGET_KERNEL_CONFIG_FRAGMENTS = \
+	ti_config_fragments/baseport.cfg \
+	ti_config_fragments/power.cfg \
+	ti_config_fragments/connectivity.cfg \
+	ti_config_fragments/ipc.cfg \
+	ti_config_fragments/audio_display.cfg \
+	ti_config_fragments/wlan.cfg \
+	ti_config_fragments/android_omap.cfg \
+	ti_config_fragments/dra7_only.cfg
+
+TARGET_KERNEL_DTS_NAME = am57xx-beagle-x15
+TARGET_KERNEL_COMMAND_LINE = root=PARTUUID=00000000-02 rw console=ttyS2,119200 androidboot.console=ttyS2 init=/init rootfstype=ext4 rootwait drm.rnodes=1 snd.slots_reserved=1,1
+KERNEL_OUT_DIR = $(PRODUCT_OUT)/boot
+
+TARGET_SGX_DDK_DRV_SRC_DIR = device/ti/proprietary-open/jacinto6/sgx_src/eurasia_km/eurasiacon/build/linux2/omap_android
+TARGET_SGX_DDK_DRV_FLAGS = TARGET_PRODUCT="jacinto6evm" BUILD=release
+TARGET_SGX_DDK_DRV_BINARY_PATH = target/pvrsrvkm.ko
+
+# Check for availability of kernel source
+ifneq ($(wildcard $(KERNEL_SRC_DIR)/Makefile),)
+  # Give precedence to TARGET_PREBUILT_KERNEL
+  ifeq ($(TARGET_PREBUILT_KERNEL),)
+    TARGET_KERNEL_BUILT_FROM_SOURCE := true
+  endif
 endif
 
+ifneq ($(TARGET_KERNEL_BUILT_FROM_SOURCE), true)
+  # Use prebuilt kernel
+  ifeq ($(TARGET_PREBUILT_KERNEL),)
+    LOCAL_KERNEL := device/ti/beaglex15/kernel
+  else
+    LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+  endif
+
 PRODUCT_COPY_FILES := \
-	$(LOCAL_KERNEL):kernel \
+	$(LOCAL_KERNEL):kernel
+endif
+
+PRODUCT_COPY_FILES += \
 	device/ti/beaglex15/hardware_beaglex15.xml:system/etc/permissions/hardware_beaglex15.xml \
 	device/ti/beaglex15/init.beaglex15board.rc:root/init.beaglex15board.rc \
 	device/ti/beaglex15/init.beaglex15board.usb.rc:root/init.beaglex15board.usb.rc \

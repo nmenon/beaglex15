@@ -28,8 +28,8 @@ TARGET_CPU_VARIANT := cortex-a15
 TARGET_NO_BOOTLOADER := true
 
 BOARD_KERNEL_BASE := 0x80000000
-#BOARD_KERNEL_CMDLINE := console=ttyO2,115200n8 mem=1024M androidboot.console=ttyO2 androidboot.hardware=beaglex15board vram=20M omapfb.vram=0:16M
-BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01f00000
+BOARD_KERNEL_CMDLINE := root=PARTUUID=00000000-02 rw console=ttyS2,119200 androidboot.console=ttyS2 init=/init rootfstype=ext4 rootwait drm.rnodes=1
+BOARD_MKBOOTIMG_ARGS += --ramdisk_offset 0x01f00000
 
 TARGET_NO_RADIOIMAGE := true
 TARGET_BOARD_PLATFORM := jacinto6
