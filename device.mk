@@ -62,6 +62,9 @@ ifneq ($(TARGET_KERNEL_BUILT_FROM_SOURCE), true)
 
 PRODUCT_COPY_FILES := \
 	$(LOCAL_KERNEL):kernel
+else
+# we build from source
+TARGET_NO_KERNEL := true
 endif
 
 PRODUCT_COPY_FILES += \
